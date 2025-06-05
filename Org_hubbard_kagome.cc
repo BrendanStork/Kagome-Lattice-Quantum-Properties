@@ -8,9 +8,9 @@ int main(int argc, char *argv[])
   {
   int Nx = 4;
   int Ny = 2;
-  double U = 0;
-  int Npart = 1;
-  int Nsweeps = 20;
+  double U = Uval;
+  int Npart = 0;
+  int Nsweeps = sweepNum;
     
     /* This is left over from the original Hubbard_2d sample included
      in iTensor. Unknown purpose, but doesn't seem to affect the results.*/
@@ -25,19 +25,19 @@ int main(int argc, char *argv[])
   /* N = Nx * Ny * 4 when using squareDepl as Nx and Ny now represent the number of unit cells
   in the Nx and Ny direction, rather than the number of sites, with each cell consisting of four sites */
   auto N = Nx * Ny * 4;
-    //int B = 3*N/2 - Ny;
+    int B = 3*N/2 - Ny;
     
     auto sites = Electron(N, {"ConserveSz", false,"ConserveNf", true});
   //PrintData(sites);
-  double t0 = 1.0;
-  double t1 = 1.0;
+  double t0 = t_hop;
+  double t1 = tprime;
     //auto tVar = .999;
  
   auto ampo = AutoMPO(sites);
       
   /* Currently, squareDepl is automatically periodic along y and does not yet have an alternate option.
    Results are independent of the truth of YPeriodic as of now.*/
-  auto lattice = kagome(Nx, Ny, {"YPeriodic = ", false});
+  auto lattice = squareDepl(Nx, Ny, {"YPeriodic = ", false});
   //auto lattice = squareLattice(Nx, Ny, {"YPeriodic = ", false});
   for(auto j : lattice)
       {
