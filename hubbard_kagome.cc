@@ -1,12 +1,12 @@
 #include "itensor/all.h"
-#include "1_5depl.h"
+#include "kagome.h"
 #include <iomanip>
 
 using namespace itensor;
 
 int main(int argc, char *argv[])
   {
-  int Nx = 4;
+  int Nx = 1;
   int Ny = 2;
   double U = 0;
   int Npart = 1;
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     
   /* N = Nx * Ny * 4 when using squareDepl as Nx and Ny now represent the number of unit cells
   in the Nx and Ny direction, rather than the number of sites, with each cell consisting of four sites */
-  auto N = Nx * Ny * 4;
+  auto N = Nx * Ny * 6;
     //int B = 3*N/2 - Ny;
     
     auto sites = Electron(N, {"ConserveSz", false,"ConserveNf", true});
@@ -790,7 +790,7 @@ int main(int argc, char *argv[])
 
 
    
-    
+    /*
     
     //CREATES FILES
     
@@ -812,7 +812,7 @@ int main(int argc, char *argv[])
         SpinCorrFile << "\n";
     }
     SpinCorrFile.close();
-   
+   */
 /*
 	std::ofstream PFile("Pij_es_File_2x2_tRatiotRat_UUval_Npart_SweepsweepNum.txt");
         for(int i = 0; i < N; i++){
@@ -852,7 +852,7 @@ int main(int argc, char *argv[])
         PCorrFile2.close();
 	*/
 
-
+/*
     std::ofstream N_File("N_File_4x2_tRatiotRat_SweepsweepNum.txt");
     N_File << Nx << "\n" << Ny << "\n" << N;
     N_File.close(); 
@@ -861,7 +861,7 @@ int main(int argc, char *argv[])
     std::ofstream C_File("ConvergeData_4x2_tRatiotRat_UUval_Npart_SweepsweepNum.txt");
 C_File << Nsweeps << "\n" << std::setprecision(13) <<  energy << "\n" << std::setprecision(13) << SiSj[1][2] << "\n" << std::setprecision(13) << siteSpin[1] << "\n" <<std::setprecision(13) << siteSpin[2];
     C_File.close();
-        
+      */
  /*
 	std::ofstream PFile("PalphaFile_2x2_tRatiotRat_UUval_Npart_alpha1_SweepsweepNum.txt");
         for(int i = 0; i < N; i++){
