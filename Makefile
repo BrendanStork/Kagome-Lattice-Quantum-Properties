@@ -1,23 +1,10 @@
-# 1. Put this file in the same folder as your 'driver' code 
-#    (the code containing the 'main' function).
-
-# 2. Edit LIBRARY_DIR to point at the location of your ITensor Library
-#    source folder (this is the folder that has options.mk in it)
 #LIBRARY_DIR=$(HOME)/itensor
 LIBRARY_DIR=$(HOME)/Documents/Packages/itensor/itensor
 
-# 3. If your 'main' function is in a file called 'hubbard2d_fdp.cc', then
-#    set APP to 'hubbard2d_fdp'. Running 'make' will compile the app.
-#    Running 'make debug' will make a program called 'hubbard2d_fdp-g'
-#    which includes debugging symbols and can be used in gdb (Gnu debugger);
 APP=hubbard_kagome
 
-# 4. Add any headers your program depends on here. The make program
-#    will auto-detect if these headers have changed and recompile your app.
 HEADERS=myclass.h
 
-# 5. For any additional .cc (source) files making up your project,
-#    add their full filenames here.
 CCFILES=$(APP).cc
 
 #################################################################

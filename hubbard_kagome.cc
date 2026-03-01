@@ -6,7 +6,7 @@ using namespace itensor;
 
 int main(int argc, char *argv[])
   {
-  int Nx = 1;
+  int Nx = 7;
   int Ny = 2;
   double U = 0;
   int Npart = 1;
