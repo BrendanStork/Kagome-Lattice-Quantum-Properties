@@ -1,6 +1,5 @@
-//The following ifndef/define/endif pattern is called a 
-//scope guard, and prevents the C++ compiler (actually, preprocessor)
-//from including a header file more than once.
+//Unmodified ITensor code. 
+//Prevents header files being included more than once.
 #ifndef __MY_CLASS_H_
 #define __MY_CLASS_H_
 
