@@ -28,15 +28,7 @@ class MyClass
 
     };
 
-//
-//Defining this method enables printing of MyClass objects
-//using cout << m << endl; where m is a MyClass instance.
-//
-//It also allows printing using the print,println,printf, and
-//printfln functions defined by ITensor. 
-//Use the "%s" token to print custom objects such as a MyClass
-//object with printf and printfln.
-//
+
 inline std::ostream&
 operator<<(std::ostream& s, MyClass const& m)
     {
