@@ -1,5 +1,5 @@
 #include "itensor/all.h"
-#include "kagome.h" //kagome header file
+#include "kagome.h" //Custom kagome header file
 #include <iomanip>
 
 using namespace itensor;
@@ -164,7 +164,7 @@ int main(int argc, char *argv[])
       
       }
 */
-/* //// Addtional alternate non-random state initialization
+/* // Addtional alternate non-random state initialization
     for(auto idx : range1(Npart))
        {
        if(idx >1 and idx%2 == 0){
@@ -177,7 +177,7 @@ int main(int argc, char *argv[])
 */
 
            
-
+  //ITensor sweep parameters
   auto sweeps = Sweeps(Nsweeps);
   sweeps.maxdim() = 20, 60, 100, 600, 5000, 10000, 12000;
   sweeps.noise() = 1E-3, 5E-3, 1E-4, 5E-4, 1E-5, 5E-6, 1E-6, 5E-7, 1E-7, 5E-8, 1E-8, 5E-9,  1E-9, 5E-10, 1E-10, 5E-11, 1E-11, 5E-12, 1E-12, 5E-13, 1E-13, 5E-14, 1E-14, 0;
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
     auto psi0 = MPS(state);
     
     
-    /*
+    /* //ITensor Spin Expectation values algorithm
         for( auto j : range1(N) )
             {
             //re-gauge psi to get ready to measure at position j
@@ -203,9 +203,9 @@ int main(int argc, char *argv[])
 
             //take an inner product
             auto szj = elt(bra*Szjop*ket);
-            printfln("%d %.12f",j,szj);
-            }*/
-    
+        
+            }
+     */
     
     
   auto [energy,psi] = dmrg(H,psi0,sweeps,{"Quiet=",true});
@@ -222,12 +222,12 @@ int main(int argc, char *argv[])
     
     
     /*
-    //Density expectation values
+    //Density expectation values, based on ITensor operator framework
     
     println("\nj Nup = ");
         for( auto j : range1(N) )
             {
-            //re-gauge psi to get ready to measure at position j
+            
             psi.position(j);
 
             auto ket = psi(j);
@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 
             auto Nupjop = op(sites,"Nup",j);
 
-            //take an inner product
+        
             auto Nuj = elt(bra*Nupjop*ket);
             printfln("%d %.12f",j,Nuj);
             }
@@ -243,15 +243,10 @@ int main(int argc, char *argv[])
     println("\nj Ndn = ");
         for( auto j : range1(N) )
             {
-            //re-gauge psi to get ready to measure at position j
             psi.position(j);
-
             auto ket = psi(j);
             auto bra = dag(prime(ket,"Site"));
-
-            auto Ndnjop = op(sites,"Ndn",j);
-
-            //take an inner product
+            auto Ndnjop = op(sites,"Ndn",j)
             auto Ndnj = elt(bra*Ndnjop*ket);
             printfln("%d %.12f",j,Ndnj);
             }
@@ -260,7 +255,7 @@ int main(int argc, char *argv[])
     */
     
     
-    //Spin Correlation
+    //Spin Correlation, based on ITensor operator framework
     
     
     double SiSj[N][N]; //Spin correlation array
@@ -271,7 +266,7 @@ int main(int argc, char *argv[])
              
         
             auto psi1 = psi;
-              auto psi2 = psi;
+            auto psi2 = psi;
             auto Sziop = op(sites,"Sz",p);
             auto Szjop = op(sites,"Sz",i);
             
@@ -284,7 +279,6 @@ int main(int argc, char *argv[])
             C = Szjop*psi2(i);
             psi2.set(i,C.noPrime());
 
-                //printfln("Before (alt): %d %d %.12f",p,i,inner(psi1,psi2));
             SiSj[p-1][i-1] = inner(psi1,psi2);
         }
     }
@@ -332,7 +326,7 @@ int main(int argc, char *argv[])
              
         
             auto psi1 = psi;
-              auto psi2 = psi;
+            auto psi2 = psi;
             auto Ntotiop = op(sites,"Ntot",p);
             auto Ntotjop = op(sites,"Ntot",i);
             
@@ -345,7 +339,6 @@ int main(int argc, char *argv[])
             C = Ntotjop*psi2(i);
             psi2.set(i,C.noPrime());
 
-                //printfln("Before (alt): %d %d %.12f",p,i,inner(psi1,psi2));
             NtotCorr[p-1][i-1] = inner(psi1,psi2);
         }
     }
@@ -360,23 +353,12 @@ int main(int argc, char *argv[])
     
     
     
-    
-    //PrintData(ampo);
-  //PrintData(H);
-  //PrintData(psi0);
-  
+  //Value outputs
   PrintData(U);
-  //PrintData(t);
-  //PrintData(state);
-  //PrintData(H);
-  //PrintData(F);
   PrintData(lattice);
-    PrintData(Nx);
-    PrintData(Ny);
-        //std::cout << B << "    ";
-    //std::cout << lattice[0].s1 << " " << lattice[0].s2 << "   " << lattice[0].type << "    ";
-  //PrintData(totalQN(psi));
-  //PrintData(maxLinkDim(psi));
+  PrintData(Nx);
+  PrintData(Ny);
+    
     std::cout << "\n" << "Energy = " << std::setprecision(13) << energy  << "\n";
     std::cout << "\n" << "SPIN CORRELATIONS" << "\n";
     for(int p = 0; p < N; p++){
@@ -433,7 +415,7 @@ int main(int argc, char *argv[])
             }
     
  
-///////////// SUPERCONDUCTING GOOD ONE////////////
+//Superconducting phase characterization for s, s*, and d-wave
     /*
         print("Superconducting \n");
         
