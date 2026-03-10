@@ -1,5 +1,5 @@
 #include "itensor/all.h"
-#include "kagome.h"
+#include "kagome.h" //kagome header file
 #include <iomanip>
 
 using namespace itensor;
@@ -12,34 +12,23 @@ int main(int argc, char *argv[])
   int Npart = 1;
   int Nsweeps = 20;
     
-    /* This is left over from the original Hubbard_2d sample included
-     in iTensor. Unknown purpose, but doesn't seem to affect the results.*/
-  /*if(argc > 3)
-    U = std::stof(argv[3]);
-  if(argc > 2)
-    Ny = std::stoi(argv[2]);
-  if(argc > 1)
-    Nx = std::stoi(argv[1]);*/
 
     
-  /* N = Nx * Ny * 4 when using squareDepl as Nx and Ny now represent the number of unit cells
-  in the Nx and Ny direction, rather than the number of sites, with each cell consisting of four sites */
+  /* N = Nx * Ny * 6 when using kagome as Nx and Ny now represent the number of unit cells
+  in the Nx and Ny direction, rather than the number of sites, with each cell consisting of six sites */
   auto N = Nx * Ny * 6;
-    //int B = 3*N/2 - Ny;
+  
     
-    auto sites = Electron(N, {"ConserveSz", false,"ConserveNf", true});
-  //PrintData(sites);
+  auto sites = Electron(N, {"ConserveSz", false,"ConserveNf", true});
   double t0 = 1.0;
   double t1 = 1.0;
-    //auto tVar = .999;
+
  
   auto ampo = AutoMPO(sites);
       
-  /* Currently, squareDepl is automatically periodic along y and does not yet have an alternate option.
-   Results are independent of the truth of YPeriodic as of now.*/
+  //"kagome" is the lattice function.
   auto lattice = kagome(Nx, Ny, {"YPeriodic = ", false});
-  //auto lattice = squareLattice(Nx, Ny, {"YPeriodic = ", false});
-  for(auto j : lattice)
+  for(auto j : lattice) //Modified the Itensor Hamiltonian algorithm to handle 2 bond types. This requires altering header file. 
       {
       if (j.type == "0")
           {
@@ -62,8 +51,6 @@ int main(int argc, char *argv[])
       ampo += U, "Nupdn", j;
       }
     
-    //ampo += 0.001 , "Sz", 1;
-    
   auto H = toMPO(ampo); //Hamiltonian
   auto state = InitState(sites, "Emp"); //State initialized to empty
     
@@ -71,7 +58,7 @@ int main(int argc, char *argv[])
 
 
     //RANDOM INITIAL STATE
-
+	//Creates random intial state in which Nup = Ndn for 
     std::random_device rd;
     std::mt19937 generator(rd());
     std::uniform_int_distribution<int> distribution1(1, N);
@@ -102,7 +89,6 @@ int main(int argc, char *argv[])
                 auto NotThere = std::find(SiteList.begin(), SiteList.end(), rand_num1);
                 if (NotThere == SiteList.end()){
                     InList = false;
-                    //print("Numpart>N: ", rand_num1, "\n");
                     
                 }
             }
@@ -171,14 +157,14 @@ int main(int argc, char *argv[])
 
 /*
     
-    // Places fermions for intial state
+    // Alternate non-random state initialization
   for(auto j : range1(N))
       {
       state.set(j, (j == 1  ? "Dn" : "Emp"));
       
       }
 */
-/*
+/* //// Addtional alternate non-random state initialization
     for(auto idx : range1(Npart))
        {
        if(idx >1 and idx%2 == 0){
@@ -189,43 +175,22 @@ int main(int argc, char *argv[])
        }
        }
 */
-/*
-
-    state.set(2, "Up");
-    //state.set(3, "UpDn");
-    //state.set(4, "UpDn");
-    state.set(5, "UpDn");
-    //state.set(6, "Dn");
-    state.set(7, "UpDn");
-    //state.set(8, "Dn");
-    //state.set(9, "Dn");
-    //state.set(10, "Dn");
-    state.set(11, "UpDn");
-    //state.set(12, "Dn");
-    //state.set(13, "Dn");
-    //state.set(14, "Dn");
-    state.set(15, "UpDn");
-    state.set(16, "Dn");
-*/    
 
            
 
   auto sweeps = Sweeps(Nsweeps);
   sweeps.maxdim() = 20, 60, 100, 600, 5000, 10000, 12000;
-  //sweeps.maxdim() = 20, 60, 100, 1200, 10000, 20000, 24000;
   sweeps.noise() = 1E-3, 5E-3, 1E-4, 5E-4, 1E-5, 5E-6, 1E-6, 5E-7, 1E-7, 5E-8, 1E-8, 5E-9,  1E-9, 5E-10, 1E-10, 5E-11, 1E-11, 5E-12, 1E-12, 5E-13, 1E-13, 5E-14, 1E-14, 0;
   sweeps.cutoff() = 1E-2, 1E-4, 1E-8;
   sweeps.niter() = 16;
 
     
-    //PrintData(state);
+  
     
-    
-  //auto psi0 = randomMPS(state);
     auto psi0 = MPS(state);
     
     
-    /*println("\nj Sz = ");
+    /*
         for( auto j : range1(N) )
             {
             //re-gauge psi to get ready to measure at position j
