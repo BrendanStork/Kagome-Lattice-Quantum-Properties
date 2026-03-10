@@ -7,7 +7,7 @@ This project is a framework for a DMRG manalysis of the Kagome lattice and explo
 
 ## Overview
 
-While ITensor provides the foundational framework, all extensions, algorithms, and data-processing pipelines in this project are original work by Brendan Stork unless otherwise noted. The project focuses on multi-bond Hamiltonians, superconductivity algorithms, and Python-based data analysis.
+ITensor provides the foundational framework, all extensions, algorithms, and data-processing pipelines in this project are original work by Brendan Stork unless otherwise noted. The project focuses on multi-bond Hamiltonians, superconductivity algorithms, and Python-based data analysis.
 
 ---
 
@@ -32,11 +32,8 @@ While ITensor provides the foundational framework, all extensions, algorithms, a
 6. **Custom Superconductivity Algorithms**  
    - Developed algorithms for simulating different superconducting phases, including handling multi-operator combinations and advanced indexing strategies.  
    - Through development, identified a limitation in ITensor’s current support for fermion anticommutation signs, which affected correctness for certain simulations.  
-   - Despite this limitation, the work demonstrates extensive framework development, algorithmic exploration, and problem-solving.
 
 7. **File Output and Python Analysis**  
    - Designed a workflow to save simulation data to files and analyze results using Python.
 
----
 
-## Repository Structure
