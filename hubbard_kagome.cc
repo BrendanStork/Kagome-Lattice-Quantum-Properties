@@ -537,19 +537,22 @@ int main(int argc, char *argv[])
     }
 
 
-
+ 	//I needed four-operator sexpeftation values for the superconducting analysis, which ITensor
+	//didn't appear to easily support. I also needed them to operate accross four indices. 
+	//This gets around that by separating the bra and ket operators into chunks that are operated on
+	//individually then combined, as well as separating the correlated and uncorrelated parts.
 
 
 
 	//double Pij_s[N][N];
-        double Pij_es[N][N];
-        double Pij_d[N][N];
+    double Pij_es[N][N];
+    double Pij_d[N][N];
 
 	double PijTot_es[N][N];
-        double PijTot_d[N][N];
+    double PijTot_d[N][N];
 
 	double PijUnCorr_es[N][N];
-        double PijUnCorr_d[N][N];
+    double PijUnCorr_d[N][N];
 	for(int i = 1; i <= N ; i++)
         {
             auto Cupop_i = op(sites, "Cup", i);
@@ -571,7 +574,7 @@ int main(int argc, char *argv[])
                 auto Cdagupop_j = op(sites, "Cdagup", j);
                 auto Cdagdnop_j = op(sites, "Cdagdn", j);
                 
-		//auto DelExp1_s = 0.0;
+		  		//auto DelExp1_s = 0.0;
                 //auto DelExp2_s = 0.0;
                 
                 auto DelExp1_es = 0.0;
@@ -583,7 +586,7 @@ int main(int argc, char *argv[])
          	//Initialize Uncorrelated Dels
                 
 		auto Uncorr_es = 0.0;
-                auto Uncorr_d = 0.0;
+        auto Uncorr_d = 0.0;
                 
 		for(int kp = 0; kp < 3 ; kp++)
                 {
@@ -825,14 +828,11 @@ C_File << Nsweeps << "\n" << std::setprecision(13) <<  energy << "\n" << std::se
 
    
    
-    
+    //Prints more values (ground state energy, U value spin expectation value, etc)
     PrintData(Nx);
     PrintData(Ny);
     PrintData(U);
- //   PrintData(totalQN(psi));
     std::cout << "\n" << "Energy = " << std::setprecision(13) << energy  << "\n";
-   // print(state);  
-    /*//Third time
     for(int i = 1; i <= N; i++){
         std::cout <<  std::setprecision(13) << siteSpin[i]  << "  " << "\n";
         
