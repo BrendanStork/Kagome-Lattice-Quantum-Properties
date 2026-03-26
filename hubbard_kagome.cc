@@ -537,10 +537,10 @@ int main(int argc, char *argv[])
     }
 
 
- 	//I needed four-operator sexpeftation values for the superconducting analysis, which ITensor
+ 	//I needed four-operator expectation values for the superconducting analysis, which ITensor
 	//didn't appear to easily support. I also needed them to operate accross four indices. 
 	//This gets around that by separating the bra and ket operators into chunks that are operated on
-	//individually then combined, as well as separating the correlated and uncorrelated parts.
+	//individually then combined, as well as separating the correlated and uncorrelated contributions.
 
 
 
