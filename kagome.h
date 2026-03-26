@@ -2,7 +2,7 @@
 
 namespace itensor {
 
-LatticeGraph inline //Algorithm devloped by Brendan Stork and uses a modified ITensor file. Framework ITensor.
+LatticeGraph inline //Algorithm developed by Brendan Stork and uses a modified ITensor file. Framework ITensor.
 kagome(int Nx,
                    int Ny,
                    Args const& args = Args::global())
