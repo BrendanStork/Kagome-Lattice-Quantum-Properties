@@ -1,0 +1,8 @@
+*.o
+*.out
+*.swp
+.ipynb_checkpoints/
+kagome.cc
+hubbard_kagome
+
+
