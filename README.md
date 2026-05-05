@@ -1,7 +1,7 @@
 
 # Quantum Simulation Framework Using ITensor
 
-This project is a framework for a DMRG manalysis of the Kagome lattice and exploring magnetic and superconducting phases. It is built on the open-source [ITensor library](https://itensor.org) (GPLv3), which provides core tensor operations, operator definitions, and Hamiltonian construction tools.
+This project is a framework for a DMRG analysis of the Kagome lattice and exploring magnetic and superconducting phases. It is built on the open-source [ITensor library](https://itensor.org) (GPLv3), which provides core tensor operations, operator definitions, and Hamiltonian construction tools.
 
 ---
 
